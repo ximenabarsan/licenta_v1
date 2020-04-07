@@ -1,0 +1,26 @@
+﻿<Window x:Class="MedicalClinic.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedicalClinic"
+        xmlns:viewmodels="clr-namespace:MedicalClinic.ViewModels"
+        xmlns:views="clr-namespace:MedicalClinic.Views" 
+        mc:Ignorable="d"
+        Title="Log-in page" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Name="registerTemplate" DataType="{x:Type viewmodels:RegisterViewModel}">
+            <views:Register DataContext="{Binding}"></views:Register>
+            
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Label Content="Login page" HorizontalAlignment="Left" Margin="337,54,0,0" VerticalAlignment="Top" Width="213"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="389,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
+        <Label Content="email" HorizontalAlignment="Left" Margin="284,130,0,0" VerticalAlignment="Top"/>
+        <Label Content="Parola" HorizontalAlignment="Left" Margin="284,213,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="389,213,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <Button Content="Log-in" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="377,279,0,0" />
+
+    </Grid>
+</Window>

@@ -1,0 +1,118 @@
+﻿<Window x:Class="MedicalClinic.Views.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedicalClinic.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="RegisterWindow" Height="450" Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverterRegion"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1.2*" />
+
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                
+                <RowDefinition Height="2.5*"/>
+
+
+            </Grid.RowDefinitions>
+
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="Account"  Foreground="{Binding BorderBrush, ElementName=NameTextBox}" Height="30" Width="30" VerticalAlignment="Bottom" Margin="2 5 " />
+                <TextBox x:Name="NameTextBox" materialDesign:HintAssist.Hint="Nume"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="258" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Text="{Binding Name}" Margin="0,0,0,-1.6"  />
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="Account"  Foreground="{Binding BorderBrush, ElementName=SurnameTextBox}" Height="30" Width="30" VerticalAlignment="Bottom" Margin="2 5 " />
+                <TextBox x:Name="SurnameTextBox" materialDesign:HintAssist.Hint="Prenume"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="258" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Text="{Binding Surname}" Margin="0,0,0,-0.6"  />
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="IdCard"  Foreground="{Binding BorderBrush, ElementName=CnpTextBox}" Height="30" Width="30" VerticalAlignment="Bottom" Margin="2 5 " />
+                <TextBox x:Name="CnpTextBox" materialDesign:HintAssist.Hint="CNP"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="258" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Text="{Binding CNP}" Margin="0,0,0,1.4"  />
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="Email"  Foreground="{Binding BorderBrush, ElementName=EmailTextBox}" Height="30" Width="30" VerticalAlignment="Bottom" Margin="2 5 " />
+                <TextBox x:Name="EmailTextBox" materialDesign:HintAssist.Hint="Email"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="258" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Text="{Binding Email}" Margin="0,0,0,-0.6"  />
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="5" Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="Exclamation"  Foreground="{Binding BorderBrush, ElementName=PasswordTextBox}" Height="30" Width="30" VerticalAlignment="Bottom" Margin="2 5 " />
+                <TextBox x:Name="PasswordTextBox" materialDesign:HintAssist.Hint="Parola"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="258" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                Margin="0,0,0,-0.6" Text="{Binding Password}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="6" Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="Telephone"  Foreground="{Binding BorderBrush, ElementName=TelephoneTextBox}" Height="30" Width="30" VerticalAlignment="Bottom" Margin="2 5 " />
+                <TextBox x:Name="TelephoneTextBox" materialDesign:HintAssist.Hint="Tefon"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="258" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Text="{Binding Telephone}" Margin="0,0,0,-0.6"  />
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="7">
+                <ComboBox
+                    materialDesign:HintAssist.Hint=""
+                    MinWidth="72"
+                    Margin="34,0,62.8,6.4"
+                    BorderBrush="#FF00B6FF" 
+                    x:Name="ComboRole"
+                    Visibility="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" Foreground="#FF00B6FF" FontWeight="Bold" Height="49" >
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <ComboBoxItem Content="Administrator"  Tag="1"/>
+                    <ComboBoxItem Content="Doctor" Tag="2"/>
+                    <ComboBoxItem Content="Pacient" IsSelected="True" Tag="3"/>
+
+                </ComboBox>
+            </StackPanel>
+            <Label Content="Bine ati venit!"   FontSize="25" FontWeight="Bold" Foreground="#FF00B6FF" HorizontalAlignment="Left" Margin="86,7,0,0" VerticalAlignment="Top" Height="42" Width="167" Grid.RowSpan="2"/>
+        </Grid>
+        <Label Margin="0.2,-1,-0.4,1" Grid.Column="1" BorderBrush="#FF00B6FF" Foreground="#FF00B6FF">
+            <Label.Background>
+                <ImageBrush ImageSource="/MedicalClinic;component/images/medical.jpg"/>
+            </Label.Background>
+        </Label>
+
+        <Button
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                    Height="Auto"
+                    materialDesign:ButtonAssist.CornerRadius="25"
+                    ToolTip="Apasa aici pentru a te inregistra" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+                    Command="{Binding RegisterCommand, Mode=OneTime}"
+                    CommandParameter="{Binding ElementName=ComboRole}" Margin="100,365,128.8,5">
+            <TextBlock
+                    Text="Register" Foreground="#FFF0F0F9" FontWeight="Bold" FontSize="18" />
+        </Button>
+
+
+
+    </Grid>
+</Window>

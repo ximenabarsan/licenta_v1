@@ -1,0 +1,20 @@
+﻿MedicalClinic
+
+
+winexe
+C#
+.cs
+C:\Users\Barsan Ximena\source\repos\MedicalClinic\obj\Debug\
+MedicalClinic
+none
+false
+DEBUG;TRACE
+C:\Users\Barsan Ximena\source\repos\MedicalClinic\App.xaml
+6-1188380439
+2-1073589826
+28-1362271653
+20409766468
+Views\AdminWindow.xaml;Views\AuthenticationWindow.xaml;Views\DoctorWindow.xaml;Views\LoginWindow.xaml;Views\PatientWindow.xaml;Views\RegisterWindow.xaml;
+
+True
+
