@@ -1,5 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MedicalDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Appoiment">
+    <Key>
+      <PropertyRef Name="idAppoiment" />
+    </Key>
+    <Property Name="idAppoiment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date" Type="date" Nullable="false" />
+    <Property Name="idUser" Type="int" Nullable="false" />
+    <Property Name="idDoctor" Type="int" Nullable="false" />
+    <Property Name="idService" Type="int" Nullable="false" />
+    <Property Name="startTime" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Diagnosis">
+    <Key>
+      <PropertyRef Name="idDiagnosis" />
+    </Key>
+    <Property Name="idDiagnosis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nameDiagnosis" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="Doctor">
     <Key>
       <PropertyRef Name="idDoctor" />
@@ -8,12 +26,65 @@
     <Property Name="idSpecialization" Type="int" Nullable="false" />
     <Property Name="idUser" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Medicine">
+    <Key>
+      <PropertyRef Name="idMedicine" />
+    </Key>
+    <Property Name="idMedicine" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nameMedicine" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Prescription">
+    <Key>
+      <PropertyRef Name="idPrescription" />
+    </Key>
+    <Property Name="idPrescription" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idMedicine" Type="int" Nullable="false" />
+    <Property Name="idTreatment" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Role">
     <Key>
       <PropertyRef Name="idRole" />
     </Key>
     <Property Name="idRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="nameRole" Type="varchar" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="Schedule">
+    <Key>
+      <PropertyRef Name="idSchedule" />
+    </Key>
+    <Property Name="idSchedule" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StartSchedule" Type="int" Nullable="false" />
+    <Property Name="FinishSchedule" Type="int" Nullable="false" />
+    <Property Name="idDoctor" Type="int" Nullable="false" />
+    <Property Name="idDay" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="idService" />
+    </Key>
+    <Property Name="idService" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nameService" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="idSpecialization" Type="int" Nullable="false" />
+    <Property Name="cost" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Specialization">
+    <Key>
+      <PropertyRef Name="idSpecialization" />
+    </Key>
+    <Property Name="idSpecialization" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nameSpecialization" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Treatment">
+    <Key>
+      <PropertyRef Name="idTreatment" />
+    </Key>
+    <Property Name="idTreatment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dateStart" Type="date" Nullable="false" />
+    <Property Name="dateFinish" Type="date" Nullable="false" />
+    <Property Name="idDoctor" Type="int" Nullable="false" />
+    <Property Name="idUser" Type="int" Nullable="false" />
+    <Property Name="observation" Type="varchar(max)" />
+    <Property Name="idDiagnosis" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -28,8 +99,99 @@
     <Property Name="telephone" Type="varchar" MaxLength="14" Nullable="false" />
     <Property Name="roleUser" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Week">
+    <Key>
+      <PropertyRef Name="idDay" />
+    </Key>
+    <Property Name="idDay" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nameDay" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Appoiment_Doctor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="Appoiment" Type="Self.Appoiment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="idDoctor" />
+      </Principal>
+      <Dependent Role="Appoiment">
+        <PropertyRef Name="idDoctor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Appoiment_Service">
+    <End Role="Service" Type="Self.Service" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Appoiment" Type="Self.Appoiment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="idService" />
+      </Principal>
+      <Dependent Role="Appoiment">
+        <PropertyRef Name="idService" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Appoiment_User">
+    <End Role="User" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Appoiment" Type="Self.Appoiment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="Appoiment">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Doctor_Specialization">
+    <End Role="Specialization" Type="Self.Specialization" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialization">
+        <PropertyRef Name="idSpecialization" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="idSpecialization" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prescription_Medicine">
+    <End Role="Medicine" Type="Self.Medicine" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Prescription" Type="Self.Prescription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicine">
+        <PropertyRef Name="idMedicine" />
+      </Principal>
+      <Dependent Role="Prescription">
+        <PropertyRef Name="idMedicine" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prescription_Treatment">
+    <End Role="Treatment" Type="Self.Treatment" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Prescription" Type="Self.Prescription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Treatment">
+        <PropertyRef Name="idTreatment" />
+      </Principal>
+      <Dependent Role="Prescription">
+        <PropertyRef Name="idTreatment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Role_User">
-    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Role" Type="Self.Role" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="User" Type="Self.User" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Role">
@@ -40,8 +202,92 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Schedule_Day">
+    <End Role="Week" Type="Self.Week" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Week">
+        <PropertyRef Name="idDay" />
+      </Principal>
+      <Dependent Role="Schedule">
+        <PropertyRef Name="idDay" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Schedule_Doctor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="idDoctor" />
+      </Principal>
+      <Dependent Role="Schedule">
+        <PropertyRef Name="idDoctor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Service_Specialization">
+    <End Role="Specialization" Type="Self.Specialization" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Service" Type="Self.Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialization">
+        <PropertyRef Name="idSpecialization" />
+      </Principal>
+      <Dependent Role="Service">
+        <PropertyRef Name="idSpecialization" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_Diagnosis">
+    <End Role="Diagnosis" Type="Self.Diagnosis" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diagnosis">
+        <PropertyRef Name="idDiagnosis" />
+      </Principal>
+      <Dependent Role="Treatment">
+        <PropertyRef Name="idDiagnosis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_Doctor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="idDoctor" />
+      </Principal>
+      <Dependent Role="Treatment">
+        <PropertyRef Name="idDoctor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Treatment_User">
+    <End Role="User" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="Treatment">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_User_Doctor">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
@@ -53,12 +299,69 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="MedicalDBModelStoreContainer">
+    <EntitySet Name="Appoiment" EntityType="Self.Appoiment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Diagnosis" EntityType="Self.Diagnosis" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medicine" EntityType="Self.Medicine" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Prescription" EntityType="Self.Prescription" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Specialization" EntityType="Self.Specialization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Treatment" EntityType="Self.Treatment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Week" EntityType="Self.Week" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Appoiment_Doctor" Association="Self.FK_Appoiment_Doctor">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Appoiment" EntitySet="Appoiment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Appoiment_Service" Association="Self.FK_Appoiment_Service">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="Appoiment" EntitySet="Appoiment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Appoiment_User" Association="Self.FK_Appoiment_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Appoiment" EntitySet="Appoiment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Doctor_Specialization" Association="Self.FK_Doctor_Specialization">
+      <End Role="Specialization" EntitySet="Specialization" />
+      <End Role="Doctor" EntitySet="Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prescription_Medicine" Association="Self.FK_Prescription_Medicine">
+      <End Role="Medicine" EntitySet="Medicine" />
+      <End Role="Prescription" EntitySet="Prescription" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prescription_Treatment" Association="Self.FK_Prescription_Treatment">
+      <End Role="Treatment" EntitySet="Treatment" />
+      <End Role="Prescription" EntitySet="Prescription" />
+    </AssociationSet>
     <AssociationSet Name="FK_Role_User" Association="Self.FK_Role_User">
       <End Role="Role" EntitySet="Role" />
       <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schedule_Day" Association="Self.FK_Schedule_Day">
+      <End Role="Week" EntitySet="Week" />
+      <End Role="Schedule" EntitySet="Schedule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schedule_Doctor" Association="Self.FK_Schedule_Doctor">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Schedule" EntitySet="Schedule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Service_Specialization" Association="Self.FK_Service_Specialization">
+      <End Role="Specialization" EntitySet="Specialization" />
+      <End Role="Service" EntitySet="Service" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_Diagnosis" Association="Self.FK_Treatment_Diagnosis">
+      <End Role="Diagnosis" EntitySet="Diagnosis" />
+      <End Role="Treatment" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_Doctor" Association="Self.FK_Treatment_Doctor">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Treatment" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Treatment_User" Association="Self.FK_Treatment_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Treatment" EntitySet="Treatment" />
     </AssociationSet>
     <AssociationSet Name="FK_User_Doctor" Association="Self.FK_User_Doctor">
       <End Role="User" EntitySet="User" />

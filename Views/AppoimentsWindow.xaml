@@ -1,0 +1,201 @@
+﻿<Window x:Class="MedicalClinic.Views.AppoimentsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedicalClinic.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         
+        mc:Ignorable="d"
+        Title="AppoimentsWindow" Height="475.6" Width="876.8">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+
+
+                <RowDefinition Height="2.5*"/>
+
+
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <materialDesign:Card
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+             materialDesign:ShadowAssist.ShadowEdges="Bottom,Right"
+            Padding="32"
+            Background="#FF00B6FF"
+            Height="80"
+            Width="180"
+            VerticalAlignment="Top"
+            Foreground="White"
+            FontStyle="Oblique"
+            FontWeight="Bold" 
+            Margin="46,14,38.8,0"
+            Grid.Column="0">
+            1.Alege specializare
+        </materialDesign:Card>
+        <ComboBox x:Name="comboSpecialization"
+                    materialDesign:HintAssist.Hint="Specializari"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    VerticalAlignment="Center"
+                    Width="180"
+                    
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" Foreground="Black" FontWeight="Bold" Height="58"
+                    ItemsSource="{Binding Specializations}"
+                    SelectedItem="{Binding SelectedSpecialization, Mode=TwoWay}" Margin="46,110,38.8,42.4"
+                    
+                  />
+        <materialDesign:Card
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+             materialDesign:ShadowAssist.ShadowEdges="Bottom,Right"
+            Padding="32"
+            Background="#FF00B6FF"
+            Height="80"
+            Width="180"
+            VerticalAlignment="Top"
+            Foreground="White"
+            FontStyle="Oblique"
+            FontWeight="Bold" 
+            Margin="46,14,38.8,0"
+            Grid.Column="1"
+            Grid.Row="0">
+            2.Alege Serviciul
+        </materialDesign:Card>
+        <ComboBox x:Name="comboServices"
+                    materialDesign:HintAssist.Hint="Servicii"
+                    Width="180"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Margin="46.2,112,38.6,44.4"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" Foreground="Black" FontWeight="Bold" Height="54"
+                    ItemsSource="{Binding Services, Mode=TwoWay}"
+                    SelectedItem="{Binding SelectedService, Mode=TwoWay}"/>
+        <materialDesign:Card
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+             materialDesign:ShadowAssist.ShadowEdges="Bottom,Right"
+            Padding="32"
+            Background="#FF00B6FF"
+            Height="80"
+            Width="180"
+            VerticalAlignment="Top"
+            Foreground="White"
+            FontStyle="Oblique"
+            FontWeight="Bold" 
+            Margin="46,14,38.8,0"
+            Grid.Column="2"
+            Grid.Row="0">
+            3.Alege Doctorul
+        </materialDesign:Card>
+        <ComboBox x:Name="comboDoctors"
+            materialDesign:HintAssist.Hint="Doctori"
+            Margin="46.4,108,38.4,48.4"
+            Grid.Column="2"
+            Grid.Row="0"
+            Width="180"
+            Style="{StaticResource MaterialDesignFloatingHintComboBox}" Foreground="Black" FontWeight="Bold" Height="54"
+            ItemsSource="{Binding AvailableDoctors, Mode=TwoWay}"
+            SelectedItem="{Binding SelectedDoctor, Mode=TwoWay}"
+            DisplayMemberPath="Value"/>
+        <materialDesign:Card
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+             materialDesign:ShadowAssist.ShadowEdges="Bottom,Right"
+            Padding="32"
+            Background="#FF00B6FF"
+            Height="80"
+            Width="180"
+            VerticalAlignment="Top"
+            Foreground="White"
+            FontStyle="Oblique"
+            FontWeight="Bold" 
+            Margin="46,14,38.8,0"
+            Grid.Column="0"
+            Grid.Row="1">
+            4.Alege Data
+        </materialDesign:Card>
+        <DatePicker
+        x:Name="FutureDatePicker"
+        materialDesign:HintAssist.Hint="Data" Foreground="Black" FontWeight="Bold" Height="56"
+        DisplayDateStart="{Binding TomorrowDate}"
+        DisplayDateEnd="{Binding MaxDateAppoiment}"
+        SelectedDate="{Binding SelectedDate}" 
+        Margin="46,102.6,38.8,51"
+        Grid.Column="0" Grid.Row="1"
+        Width="180">
+
+        </DatePicker>
+        <materialDesign:Card
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+             materialDesign:ShadowAssist.ShadowEdges="Bottom,Right"
+            Padding="32"
+            Background="#FF00B6FF"
+            Height="80"
+            Width="180"
+            VerticalAlignment="Top"
+            Foreground="White"
+            FontStyle="Oblique"
+            FontWeight="Bold" 
+            Margin="46,14,38.8,0"
+            Grid.Column="1"
+            Grid.Row="1">
+            5.Alege Ora
+        </materialDesign:Card>
+
+        <ComboBox x:Name="comboHours"
+                    materialDesign:HintAssist.Hint="Ora"
+                    Margin="44.2,102.6,40.6,53"
+                    Width="180"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    ItemsSource="{Binding AvailableHours}"
+                    SelectedItem="{Binding SelectedStartHour}"
+                   
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" Foreground="Black" FontWeight="Bold" Height="54"
+                    />
+
+
+
+        <Button
+    Style="{StaticResource MaterialDesignRaisedDarkButton}"
+    ToolTip="Apasa aici pentru a adauga programarea" 
+    Command="{Binding AddAppoimentCommand}"
+    Grid.Column="2"
+    Grid.Row="1"
+    Height="50"
+    Width="100"
+    Background="#FF00B6FF"
+    BorderBrush="#FF00B6FF"
+    VerticalAlignment="Top" Margin="82.4,27.6,82.4,0"
+    materialDesign:ShadowAssist.ShadowDepth="Depth3">
+            Adauga
+        </Button>
+        <Button
+    Style="{StaticResource MaterialDesignRaisedDarkButton}"
+    ToolTip="Apasa aici pentru a reveni la pagina anterioara" 
+    Command="{Binding ShowPatientViewCommand}"
+    Grid.Column="2"
+    Grid.Row="1"
+    Height="50"
+    Width="100"
+    Background="#FF00B6FF"
+    BorderBrush="#FF00B6FF"
+    VerticalAlignment="Top" Margin="85.4,115.6,79.4,0"
+    materialDesign:ShadowAssist.ShadowDepth="Depth3">
+            Back
+        </Button>
+
+
+    </Grid>
+</Window>

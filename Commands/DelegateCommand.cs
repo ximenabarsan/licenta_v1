@@ -14,7 +14,7 @@ namespace MedicalClinic
 
         public event EventHandler CanExecuteChanged;
 
-        public DelegateCommand(Action<object> execute)
+        public DelegateCommand(DelegateCommand hideControl, Action<object> execute)
           : this(execute, null)
         {
         }
@@ -43,6 +43,8 @@ namespace MedicalClinic
             if (CanExecuteChanged != null)
                 CanExecuteChanged(this, EventArgs.Empty);
         }
+
+        
     }
 }
     

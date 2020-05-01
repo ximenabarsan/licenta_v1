@@ -32,5 +32,92 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Specializations">
+      <EntityTypeMapping TypeName="MedicalDBModel.Specialization">
+        <MappingFragment StoreEntitySet="Specialization">
+          <ScalarProperty Name="nameSpecialization" ColumnName="nameSpecialization" />
+          <ScalarProperty Name="idSpecialization" ColumnName="idSpecialization" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Services">
+      <EntityTypeMapping TypeName="MedicalDBModel.Service">
+        <MappingFragment StoreEntitySet="Service">
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="idSpecialization" ColumnName="idSpecialization" />
+          <ScalarProperty Name="nameService" ColumnName="nameService" />
+          <ScalarProperty Name="idService" ColumnName="idService" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Schedules">
+      <EntityTypeMapping TypeName="MedicalDBModel.Schedule">
+        <MappingFragment StoreEntitySet="Schedule">
+          <ScalarProperty Name="idDay" ColumnName="idDay" />
+          <ScalarProperty Name="idDoctor" ColumnName="idDoctor" />
+          <ScalarProperty Name="FinishSchedule" ColumnName="FinishSchedule" />
+          <ScalarProperty Name="StartSchedule" ColumnName="StartSchedule" />
+          <ScalarProperty Name="idSchedule" ColumnName="idSchedule" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Weeks">
+      <EntityTypeMapping TypeName="MedicalDBModel.Week">
+        <MappingFragment StoreEntitySet="Week">
+          <ScalarProperty Name="nameDay" ColumnName="nameDay" />
+          <ScalarProperty Name="idDay" ColumnName="idDay" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Appoiments">
+      <EntityTypeMapping TypeName="MedicalDBModel.Appoiment">
+        <MappingFragment StoreEntitySet="Appoiment">
+          <ScalarProperty Name="startTime" ColumnName="startTime" />
+          <ScalarProperty Name="idService" ColumnName="idService" />
+          <ScalarProperty Name="idDoctor" ColumnName="idDoctor" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="idAppoiment" ColumnName="idAppoiment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Diagnosis">
+      <EntityTypeMapping TypeName="MedicalDBModel.Diagnosi">
+        <MappingFragment StoreEntitySet="Diagnosis">
+          <ScalarProperty Name="nameDiagnosis" ColumnName="nameDiagnosis" />
+          <ScalarProperty Name="idDiagnosis" ColumnName="idDiagnosis" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medicines">
+      <EntityTypeMapping TypeName="MedicalDBModel.Medicine">
+        <MappingFragment StoreEntitySet="Medicine">
+          <ScalarProperty Name="nameMedicine" ColumnName="nameMedicine" />
+          <ScalarProperty Name="idMedicine" ColumnName="idMedicine" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Prescriptions">
+      <EntityTypeMapping TypeName="MedicalDBModel.Prescription">
+        <MappingFragment StoreEntitySet="Prescription">
+          <ScalarProperty Name="idTreatment" ColumnName="idTreatment" />
+          <ScalarProperty Name="idMedicine" ColumnName="idMedicine" />
+          <ScalarProperty Name="idPrescription" ColumnName="idPrescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Treatments">
+      <EntityTypeMapping TypeName="MedicalDBModel.Treatment">
+        <MappingFragment StoreEntitySet="Treatment">
+          <ScalarProperty Name="idDiagnosis" ColumnName="idDiagnosis" />
+          <ScalarProperty Name="observation" ColumnName="observation" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="idDoctor" ColumnName="idDoctor" />
+          <ScalarProperty Name="dateFinish" ColumnName="dateFinish" />
+          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+          <ScalarProperty Name="idTreatment" ColumnName="idTreatment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -1,0 +1,75 @@
+﻿<Window x:Class="MedicalClinic.Views.PatientAppoimentsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedicalClinic.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="PatientAppoimentsWindow" Height="464.4" Width="809.6">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <DataGrid
+    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+    Padding="32"
+   Grid.Row="0"
+  Background="White"
+  Margin="0,-2,-0.4,76"
+  ItemsSource="{Binding DataSource ,UpdateSourceTrigger=PropertyChanged}"
+  SelectedItem="{Binding SelectedAppoiment, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+  CanUserSortColumns="True"
+  CanUserAddRows="False"
+  AutoGenerateColumns="False"
+  materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn
+      Binding="{Binding Specialization}"
+      Header="Specializare"
+      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <materialDesign:DataGridTextColumn
+      Binding="{Binding Service}"
+      Header="Serviciul oferit"
+      
+      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <DataGridTextColumn
+      Binding="{Binding Doctor}"
+      Header="Doctor"
+      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn
+      Binding="{Binding Date}"
+      Header="Data"
+      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn
+      Binding="{Binding StartHour}"
+      Header="Ora Inceput"
+      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn
+      Binding="{Binding FinishHour}"
+      Header="Ora sfarsit"
+      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <Button Command="{Binding DeleteAppoimenCommand}"
+         Style="{StaticResource MaterialDesignIconButton}"
+         ToolTip="Apasa aici pentru a setrge programarea"
+        Background="#FF00B6FF"  Height="50" Width="50" Grid.Row="1" Margin="552,9,191.6,25"   >
+            <materialDesign:PackIcon
+            Kind="DeleteAlert" Height="30" Width="30" Foreground="White"/>
+        </Button>
+        <Button Command="{Binding ShowPatientViewCommand}"
+         Style="{StaticResource MaterialDesignIconButton}"
+         ToolTip="Apasa aici pentru a reveni la pagina anterioara"
+        Background="#FF00B6FF"  Height="50" Width="50" Grid.Row="1" Margin="706,11,37.6,23"   >
+            <materialDesign:PackIcon
+            Kind="KeyboardBackspace" Height="30" Width="30" Foreground="White"/>
+        </Button>
+    </Grid>
+</Window>

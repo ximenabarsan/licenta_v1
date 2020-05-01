@@ -1,0 +1,181 @@
+﻿<Window x:Class="MedicalClinic.Views.AddTreatmentsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:MedicalClinic.Views"
+        mc:Ignorable="d"
+        Title="AddTreatmentsWindow" Height="605.127" Width="1129.319">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <TextBox x:Name="cnp" materialDesign:HintAssist.Hint="CNP Pacient"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Text="{Binding Cnp , Mode=TwoWay}" Margin="16,17,97.8,308"/>
+            <Button
+                VerticalAlignment="Top"
+  Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+  ToolTip="Cauta pacientul" Margin="280,25,32,0" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+   Command="{Binding ShowUsersCommand}">
+                <materialDesign:PackIcon
+    Kind="Search"
+    Height="20"
+    Width="24" />
+            </Button>
+
+            <DataGrid Margin="0,90,3.8,0" Background="White"
+             ItemsSource="{Binding UsersSource}"
+             SelectedItem="{Binding SelectedUser}"
+             AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nume" Binding="{Binding nameUser}" />
+                    <DataGridTextColumn Header="Prenume" Binding="{Binding surnameUser}" />
+                    <DataGridTextColumn Header="CNP" Binding="{Binding CNP}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <TextBox x:Name="Diagnostic" materialDesign:HintAssist.Hint="Diagnostic"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Text="{Binding Diagnosis, Mode=TwoWay}" Margin="16,17,97.8,308"   />
+            <Button
+                VerticalAlignment="Top"
+  Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+  ToolTip="Cauta diagnosticul" Margin="263,25,62.6,0" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+  Command="{Binding ShowDiagnosisCommand}" >
+                <materialDesign:PackIcon
+    Kind="Search"
+    Height="20"
+    Width="24" />
+            </Button>
+            <Button
+                VerticalAlignment="Top"
+  Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+  ToolTip="Adauga diagnostic" Margin="317,23,8.6,0" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+   Command="{Binding AddDiagnosisCommand}"  >
+                <materialDesign:PackIcon
+    Kind="AddThick"
+    Height="20"
+    Width="24" />
+            </Button>
+
+            <DataGrid Margin="0,90,3.8,0" Background="White"
+                      ItemsSource="{Binding DiagnosisSource}"
+                      SelectedItem="{Binding SelectedDiagnosis}"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nume Diagnostic" Binding="{Binding nameDiagnosis}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="2">
+            <TextBox x:Name="Medicament" materialDesign:HintAssist.Hint="Medicamente"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Text="{Binding Medicine , Mode=TwoWay}" Margin="16,17,97.8,308"   />
+            <Button
+                VerticalAlignment="Top"
+  Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+  ToolTip="Cauta pacientul" Margin="265,24,59.8,0" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+                Command="{Binding ShowMedicineCommand}">
+                <materialDesign:PackIcon
+    Kind="Search"
+    Height="20"
+    Width="24" />
+            </Button>
+            <Button
+                VerticalAlignment="Top"
+  Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+  ToolTip="Adauga medicamente" Margin="317,23,8.6,0" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+               Command="{Binding AddMedicineCommand}">
+                <materialDesign:PackIcon
+    Kind="AddThick"
+    Height="20"
+    Width="24" />
+            </Button>
+
+            <DataGrid Margin="0,90,189.8,1.2" Background="White"
+                      ItemsSource="{Binding MedicinesSource}"
+                      SelectedItem="{Binding SelectedMedicine}"
+                      AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Denumire medicamente" Binding="{Binding nameMedicine}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Margin="189,91,0.8,0.2" Background="White"
+                      ItemsSource="{Binding SelectedMedicines}"
+                      SelectedItem="{Binding SelectedFinal}"
+                      AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Medicamente alese" Binding="{Binding nameMedicine}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Label Height="40" Width="350"  FontStyle="Italic" FontWeight="Bold" Background="#FF00B6FF" Foreground="White" VerticalAlignment="Top" FontSize="20">Introduceti observatiile medicale</Label>
+            <TextBox Text="{Binding Observations, Mode=TwoWay}" Margin="14,42,19.8,15" BorderBrush="#FF00B6FF" />
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <DatePicker
+        x:Name="FutureDatePicker"
+        materialDesign:HintAssist.Hint="Data inceput tratament" Foreground="Black" FontWeight="Bold" Height="60"
+        DisplayDateStart="{Binding TomorrowDate}"
+        DisplayDateEnd="{Binding MaxDateAppoiment}"
+        SelectedDate="{Binding StartDate}" 
+        Margin="21,17,25.8,109.4"/>
+            <DatePicker
+        x:Name="FutureDatePicker2"
+        materialDesign:HintAssist.Hint="Data final tratament" Foreground="Black" FontWeight="Bold" Height="60"
+        DisplayDateStart="{Binding TomorrowDate}"
+        DisplayDateEnd="{Binding MaxDateAppoiment}"
+        SelectedDate="{Binding FinishDate}" 
+        Margin="25,101,21.8,25.4"
+        Grid.Column="0"/>
+        </Grid>
+        <Grid Grid.Column="2" Grid.Row="1">
+            <Button
+                VerticalAlignment="Top"
+  Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+  ToolTip="Cauta diagnosticul" Margin="65,2,259.8,0" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+  Command="{Binding AddSelectedMedicinesCommand}" >
+                <materialDesign:PackIcon
+    Kind="Medicine"
+    Height="20"
+    Width="24" />
+            </Button>
+            <Button
+                VerticalAlignment="Top"
+  Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+  ToolTip="Cauta diagnosticul" Margin="274,1,50.8,0" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+  Command="{Binding DeleteMedicineCommand}"  >
+                <materialDesign:PackIcon
+    Kind="Delete"
+    Height="20"
+    Width="24" />
+            </Button>
+            <Button
+            Height="60"
+            Width="120"
+            Style="{StaticResource MaterialDesignFlatMidBgButton}"
+            ToolTip="Apasa pentru a adauga un tratament"   Content="Add"
+            Command="{Binding AddTreatmentCommand,UpdateSourceTrigger=PropertyChanged}"
+            Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+            Padding="2" Margin="64,103,180.8,25"/>
+            <Button
+            Height="60"
+            Width="120"
+            Style="{StaticResource MaterialDesignFlatMidBgButton}"
+            ToolTip="Apasa pentru a reveni la pagina anterioara"   Content="Back"
+            Command="{Binding ShowDoctorViewCommand,UpdateSourceTrigger=PropertyChanged}"
+            Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+            Padding="2" Margin="229,105,15.8,23"/>
+        </Grid>
+    </Grid>
+</Window>

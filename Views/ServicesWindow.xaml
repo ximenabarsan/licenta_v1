@@ -1,0 +1,137 @@
+﻿<Window x:Class="MedicalClinic.Views.ServicesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedicalClinic.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        
+        mc:Ignorable="d"
+        Title="ServicesWindow" Height="500" Width="820">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverterRegion"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2.5*">
+
+            </RowDefinition>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <!--<DataGrid AutoGenerateColumns="True" ItemsSource="{Binding DataSource}" SelectedItem="{Binding SelectedItem}" >
+            
+        </DataGrid>-->
+
+        <DataGrid
+    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+    Padding="32"
+            Grid.Row="0"
+  Background="White"
+  Margin="0,-2,-0.4,0"
+  ItemsSource="{Binding DataSource ,UpdateSourceTrigger=PropertyChanged}"
+  SelectedItem="{Binding SelectedService, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+  CanUserSortColumns="True"
+  CanUserAddRows="False"
+  AutoGenerateColumns="False"
+  materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn
+      Binding="{Binding NameService}"
+      Header="Numele Serviciului"
+      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <materialDesign:DataGridTextColumn
+      Binding="{Binding CostService}"
+      Header="Costul Serviciului"
+      
+      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                <!-- set a max length to get an indicator in the editor -->
+                
+                <DataGridTextColumn
+      Binding="{Binding NameSpecialization}"
+      Header="Specializare"
+      EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button
+        Grid.Row="1"
+        Command="{Binding ShowViewCommand}"
+        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+        Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+        ToolTip="Apasa pentru a adauga reveni la pagina anterioara" Height="60" Width="65" Margin="716,46,6.6,11">
+            <materialDesign:PackIcon
+        Kind="KeyboardBackspace"
+        Height="24"
+        Width="24"
+         materialDesign:ShadowAssist.ShadowDepth="Depth3"
+        Padding="2"/>
+        </Button>
+        <TextBox
+  x:Name="NameServiceTextBox"
+  Grid.Row="1"
+  materialDesign:HintAssist.Hint="Nume serviciu"
+  VerticalAlignment="Top"
+  HorizontalAlignment="Left"
+  Height="25"
+  Width="100"
+  Text="{Binding SelectedService.NameService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+   Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}" RenderTransformOrigin="0.979,0.685" Margin="22,19,0,0">
+        </TextBox>
+
+        <TextBox
+  x:Name="CostServiceTextBox"
+  materialDesign:HintAssist.Hint="Cost Serviciu"
+  VerticalAlignment="Top"
+  HorizontalAlignment="Left"
+  Height="25"
+  Width="100"
+ Margin="153,17,0,0" Text="{Binding SelectedService.CostService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}" Grid.Row="1">
+        </TextBox>
+        <ComboBox
+            materialDesign:HintAssist.Hint="Specializare" Margin="294,17,0,0"
+            SelectedItem="{Binding SelectedService.NameSpecialization, Mode=TwoWay}"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Height="25"
+            Width="100"
+            ItemsSource="{Binding SpecializationsCombo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}" Grid.Row="1">
+
+        </ComboBox>
+        <!-- <TextBox Text="{Binding SelectedService.NameSpecialization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="81" Margin="456,0,152,56" VerticalAlignment="Bottom" />-->
+        <Button
+    Style="{StaticResource MaterialDesignFlatMidBgButton}"
+    Grid.Row="1"
+    ToolTip="Apasa pentru a edita serviciul selectat" Height="27" Width="65"
+    Command="{Binding EditServicesCommand,UpdateSourceTrigger=PropertyChanged}"
+    Background="#FF00B6FF" BorderBrush="#FF00B6FF" 
+     Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}" Margin="523,79,205.6,14"
+    Content="Edit"
+    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+    Padding="2"/>
+
+        <Button
+            Grid.Row="1"
+            Height="27" Width="65"
+            Style="{StaticResource MaterialDesignFlatMidBgButton}"
+            ToolTip="Apasa pentru a adauga un serviciu"  Margin="417,79,311.6,14" Content="Add"
+            Command="{Binding AddServiceCommand,UpdateSourceTrigger=PropertyChanged}"
+            Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+            Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}" 
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+            Padding="2"/>
+        <Button
+            Grid.Row="1"
+            Height="27" Width="65"
+            Style="{StaticResource MaterialDesignFlatMidBgButton}"
+            ToolTip="Apasa pentru a sterge serviciul selectat" Content="Del"
+            Command="{Binding DeleteServiceCommand}"
+            Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+             materialDesign:ShadowAssist.ShadowDepth="Depth3"
+            Padding="2"
+            Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}" Margin="621,79,107.6,14"/>
+    </Grid>
+</Window>

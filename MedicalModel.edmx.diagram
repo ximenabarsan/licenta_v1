@@ -10,6 +10,27 @@
         <EntityTypeShape EntityType="MedicalDBModel.User" Width="1.5" PointX="3" PointY="5" />
         <AssociationConnector Association="MedicalDBModel.FK_User_Doctor" />
         <AssociationConnector Association="MedicalDBModel.FK_Role_User" />
+        <EntityTypeShape EntityType="MedicalDBModel.Specialization" Width="1.5" PointX="7.5" PointY="6" />
+        <AssociationConnector Association="MedicalDBModel.FK_Doctor_Specialization" />
+        <EntityTypeShape EntityType="MedicalDBModel.Service" Width="1.5" PointX="9.75" PointY="5.75" />
+        <AssociationConnector Association="MedicalDBModel.FK_Service_Specialization" />
+        <EntityTypeShape EntityType="MedicalDBModel.Schedule" Width="1.5" PointX="7.875" PointY="2.125" />
+        <EntityTypeShape EntityType="MedicalDBModel.Week" Width="1.5" PointX="5.625" PointY="2.5" />
+        <AssociationConnector Association="MedicalDBModel.FK_Schedule_Doctor" />
+        <AssociationConnector Association="MedicalDBModel.FK_Schedule_Day" />
+        <EntityTypeShape EntityType="MedicalDBModel.Appoiment" Width="1.5" PointX="12" PointY="5.25" />
+        <AssociationConnector Association="MedicalDBModel.FK_Appoiment_Doctor" />
+        <AssociationConnector Association="MedicalDBModel.FK_Appoiment_Service" />
+        <AssociationConnector Association="MedicalDBModel.FK_Appoiment_User" />
+        <EntityTypeShape EntityType="MedicalDBModel.Diagnosi" Width="1.5" PointX="5.25" PointY="9.875" />
+        <EntityTypeShape EntityType="MedicalDBModel.Medicine" Width="1.5" PointX="7.5" PointY="13.875" />
+        <EntityTypeShape EntityType="MedicalDBModel.Prescription" Width="1.5" PointX="9.75" PointY="9.625" />
+        <EntityTypeShape EntityType="MedicalDBModel.Treatment" Width="1.5" PointX="7.5" PointY="9.125" />
+        <AssociationConnector Association="MedicalDBModel.FK_Treatment_Diagnosis" />
+        <AssociationConnector Association="MedicalDBModel.FK_Treatment_Doctor" />
+        <AssociationConnector Association="MedicalDBModel.FK_Prescription_Medicine" />
+        <AssociationConnector Association="MedicalDBModel.FK_Prescription_Treatment" />
+        <AssociationConnector Association="MedicalDBModel.FK_Treatment_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

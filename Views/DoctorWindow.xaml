@@ -4,10 +4,146 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MedicalClinic.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="DoctorWindow" Height="450" Width="800">
+        Title="DoctorWindow" Height="538.595" Width="920.411">
     <Grid>
-        <TextBlock FontSize="20" Text="Aici va fi main view pentru doctor"/>
-        <Button Content="Logout" Height="Auto" Margin="278,194,359.6,138" Command="{Binding LogoutCommand, Mode=OneTime}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1.2*" />
+
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.6*"/>
+
+                <RowDefinition Height="0.4*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="0" Grid.Row="0">
+                <materialDesign:Chip
+        Content="{Binding NameDoctor}" Grid.RowSpan="1"
+                Foreground="White"
+                FontWeight="Bold"
+            Height="Auto" Width="212" Background="#FF00B6FF" 
+            IconBackground="#FF00B6FF" Margin="9,9,0,34.6" 
+            materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                    <materialDesign:Chip.Icon >
+
+                        <materialDesign:PackIcon Kind="AccountOutline" Background="#FF00B6FF" Height="36" Width="32" />
+                    </materialDesign:Chip.Icon>
+                </materialDesign:Chip>
+
+            </Grid>
+            <Grid  Width="200" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button
+    Style="{StaticResource MaterialDesignRaisedButton}"
+    Height="60"
+    Width="170"
+    Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+    FontWeight="Bold"
+    materialDesign:ButtonAssist.CornerRadius="10"
+    ToolTip="Apasa aici pentru a-ti edita datele"
+    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+    Padding="10"
+    Command="{Binding ShowEditViewCommand}">
+                    <TextBlock
+    Text="Editeaza-ti datele" />
+                </Button>
+
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="2">
+                <Button
+    Style="{StaticResource MaterialDesignRaisedButton}"
+    Height="60"
+    Width="170"
+    Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+    FontWeight="Bold"
+    materialDesign:ButtonAssist.CornerRadius="10"
+    ToolTip="Apasa aici pentru a-ti edita programul de munca"
+    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+    Padding="10" 
+    VerticalAlignment="Top"
+     Command="{Binding ShowScheduleCommand}" >
+                    <TextBlock
+    Text="Editare program" />
+                </Button>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="3">
+                <Button
+    Style="{StaticResource MaterialDesignRaisedButton}"
+    Height="60"
+    Width="170"
+    Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+    FontWeight="Bold"
+    materialDesign:ButtonAssist.CornerRadius="10"
+    ToolTip="Apasa aici pentru a adauga un tratament"
+    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+    Padding="10" 
+    Command="{Binding ShowTreatmentCommand}"
+    VerticalAlignment="Top">
+                    <TextBlock
+    Text="Adauga tratament" />
+                </Button>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="4">
+                <Button
+    Style="{StaticResource MaterialDesignRaisedButton}"
+    Height="60"
+    Width="170"
+    Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+    FontWeight="Bold"
+    materialDesign:ButtonAssist.CornerRadius="10"
+    ToolTip="Apasa aici pentru a-ti vizualiza programarile"
+    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+    Padding="10" 
+    Command="{Binding ShowAppoimentsCommand}"
+    VerticalAlignment="Top">
+                    <TextBlock
+    Text="Programari" />
+                </Button>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="5">
+                <Button
+    Style="{StaticResource MaterialDesignRaisedButton}"
+    Height="60"
+    Width="170"
+    Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+    FontWeight="Bold"
+    materialDesign:ButtonAssist.CornerRadius="10"
+    ToolTip="Apasa aici pentru a vizualiza istorucul medical al unui pacient"
+    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+    Padding="10" 
+    Command="{Binding ShowMedicalHistoryCommand}"
+    VerticalAlignment="Top">
+                    <TextBlock
+    Text="Pacienti" />
+                </Button>
+            </Grid>
+            <Button Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right" 
+                    Background="#FF00B6FF" BorderBrush="#FF00B6FF" 
+                    Content="Logout" Height="43"  Width="80"  
+                    Command="{Binding LogoutCommand, Mode=OneTime}" 
+                    VerticalAlignment="Top"
+                     materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    Padding="10" Margin="0,1.2,22.8,0"
+    
+                    />
+
+        </Grid>
+        <Label  Grid.Column="1" BorderBrush="#FF00B6FF" Foreground="#FF00B6FF">
+            <Label.Background>
+                <ImageBrush ImageSource="/MedicalClinic;component/images/medical.jpg"/>
+            </Label.Background>
+        </Label>
+
     </Grid>
 </Window>

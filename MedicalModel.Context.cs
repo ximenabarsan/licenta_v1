@@ -28,5 +28,14 @@ namespace MedicalClinic
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Specialization> Specializations { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<Schedule> Schedules { get; set; }
+        public virtual DbSet<Week> Weeks { get; set; }
+        public virtual DbSet<Appoiment> Appoiments { get; set; }
+        public virtual DbSet<Diagnosi> Diagnosis { get; set; }
+        public virtual DbSet<Medicine> Medicines { get; set; }
+        public virtual DbSet<Prescription> Prescriptions { get; set; }
+        public virtual DbSet<Treatment> Treatments { get; set; }
     }
 }

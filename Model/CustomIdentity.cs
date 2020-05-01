@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace MedicalClinic
 {
-   public class CustomIdentity : IIdentity
-    {   int IdUser;
+    public class CustomIdentity : IIdentity
+    {   
+        
+        int IdUser;
         string Telephone;
         string Surname;
         string CNP;
         string Password;
 
-        public CustomIdentity(string name, int idUser, string[] roles, string email,string telephone, string surname,string cnp,string password)
+        public CustomIdentity(string name, int idUser, string[] roles, string email, string telephone, string surname, string cnp, string password)
         {
             Name = name;
             Email = email;
@@ -33,8 +35,10 @@ namespace MedicalClinic
         public string Email { get; private set; }
         public string[] Roles { get; private set; }
 
-        public string AuthenticationType { get { return " Custom authentication"; }}
+        public string AuthenticationType { get { return " Custom authentication"; } }
         public bool IsAuthenticated { get { return !string.IsNullOrEmpty(Name); } }
+
+        
 
 
     }

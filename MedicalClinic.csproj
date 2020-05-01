@@ -73,15 +73,46 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Appoiment.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Diagnosi.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Doctor.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Medicine.cs">
       <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AnonymousIdentity.cs" />
     <Compile Include="Model\CustomIdentity.cs" />
     <Compile Include="Model\CustomPrincipal.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Prescription.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Schedule.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Specialization.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Treatment.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\AppoimentsViewModel.cs" />
+    <Compile Include="ViewModels\DataGridAppoimentsDoctorViewModel.cs" />
+    <Compile Include="ViewModels\DataGridAppoimentsViewModel.cs" />
+    <Compile Include="ViewModels\DataGridTreatmentsViewModel.cs" />
+    <Compile Include="ViewModels\DataGridViewModel.cs" />
+    <Compile Include="ViewModels\DoctorAppoimentsViewModel.cs" />
     <Compile Include="ViewModels\DoctorViewModel.cs" />
+    <Compile Include="ViewModels\EditUsersViewModel.cs" />
     <Compile Include="ViewModels\IAuthenticationService.cs" />
     <Compile Include="MedicalModel.cs">
       <AutoGen>True</AutoGen>
@@ -100,25 +131,57 @@
     </Compile>
     <Compile Include="ViewModels\AuthenticationViewModel.cs" />
     <Compile Include="ViewModels\IValidationService.cs" />
+    <Compile Include="ViewModels\MedicalHistoryViewModel.cs" />
+    <Compile Include="ViewModels\PatientsAppoimentsViewModel.cs" />
     <Compile Include="ViewModels\PatientViewModel.cs" />
     <Compile Include="ViewModels\RegistrationViewModel.cs" />
+    <Compile Include="ViewModels\ScheduleViewModel.cs" />
+    <Compile Include="ViewModels\ServicesViewModel.cs" />
+    <Compile Include="ViewModels\TreatmentsViewModel.cs" />
+    <Compile Include="Views\AddTreatmentsWindow.xaml.cs">
+      <DependentUpon>AddTreatmentsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppoimentsWindow.xaml.cs">
+      <DependentUpon>AppoimentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AuthenticationWindow.xaml.cs">
       <DependentUpon>AuthenticationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DoctorAppoimentsWindow.xaml.cs">
+      <DependentUpon>DoctorAppoimentsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DoctorWindow.xaml.cs">
       <DependentUpon>DoctorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditUsersWindowAdmin.xaml.cs">
+      <DependentUpon>EditUsersWindowAdmin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MedicalHistoryWindow.xaml.cs">
+      <DependentUpon>MedicalHistoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PatientAppoimentsWindow.xaml.cs">
+      <DependentUpon>PatientAppoimentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PatientWindow.xaml.cs">
       <DependentUpon>PatientWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScheduleWindow.xaml.cs">
+      <DependentUpon>ScheduleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServicesWindow.xaml.cs">
+      <DependentUpon>ServicesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Week.cs">
+      <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +246,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AddTreatmentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppoimentsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,11 +262,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DoctorAppoimentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DoctorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditUsersWindowAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MedicalHistoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PatientAppoimentsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -204,6 +291,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RegisterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScheduleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ServicesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

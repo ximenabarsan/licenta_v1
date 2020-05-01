@@ -16,7 +16,7 @@ namespace MedicalClinic
             {
                 return _identity ?? new AnonymousIdentity();
             }
-            set 
+            set
             {
                 _identity = value;
             }
@@ -31,7 +31,7 @@ namespace MedicalClinic
         { if (_identity == null) _identity = new AnonymousIdentity();
             return _identity.Roles.Contains(role);
         }
-
+      
 
     }
 }

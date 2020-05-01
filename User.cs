@@ -18,6 +18,8 @@ namespace MedicalClinic
         public User()
         {
             this.Doctors = new HashSet<Doctor>();
+            this.Appoiments = new HashSet<Appoiment>();
+            this.Treatments = new HashSet<Treatment>();
         }
     
         public int idUser { get; set; }
@@ -32,5 +34,9 @@ namespace MedicalClinic
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Doctor> Doctors { get; set; }
         public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appoiment> Appoiments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Treatment> Treatments { get; set; }
     }
 }

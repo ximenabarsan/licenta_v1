@@ -1,6 +1,7 @@
 ﻿using MedicalClinic.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace MedicalClinic.ViewModels
 {
@@ -15,14 +17,25 @@ namespace MedicalClinic.ViewModels
     public class RegistrationViewModel : INotifyPropertyChanged, IViewModel
     {
 
+
         private string _name;
         private string _surname;
         private string _cnp;
         private string _email;
         private string _password;
         private string _telephone;
-        private  DelegateCommand _registerCommand;
+        private ObservableCollection<Specialization> _specializations = new ObservableCollection<Specialization>();
+        private Specialization _selectedSpecialization;
+        private DelegateCommand _registerCommand;
+        private DelegateCommand _showViewCommand;
+        private DelegateCommand _editUserData;
         IView toClose;
+
+
+        private bool isEditWindow;
+       
+
+
 
         #region Properties Region
         public string Name
@@ -57,28 +70,111 @@ namespace MedicalClinic.ViewModels
             set { _telephone = value; NotifyPropertyChanged("Telephone"); }
         }
 
-        public bool AdminRights {
-            get { 
-               return Thread.CurrentPrincipal.IsInRole("Administrator")? true: false ;
+      
+
+        public bool AdminRights
+        {
+            get
+            {
+                return Thread.CurrentPrincipal.IsInRole("Administrator") ? true : false;
+
+            }
+            
+        }
+
+        public bool DoctorRights
+        {
+            get {  return Thread.CurrentPrincipal.IsInRole("Doctor") ? true : false; }
+        
+        }
+
+        public bool PatientRights { 
+            get
+            {
+                return Thread.CurrentPrincipal.IsInRole("Pacient") ? true : false;
+            }
+        
+        }
+
+
+        public bool IsEditable {
+
+            get {
+                return isEditWindow ? false : true;
+            }
+           
+        }
+
+        public bool VisibleComboRoleAndSpecialization{
+            get
+            {
+                return ((AdminRights && IsEditable)||(DoctorRights && IsEditable)) ? true : false;
+
             }
         }
-        public DelegateCommand RegisterCommand{get {return _registerCommand;} }
 
+        public bool NotIsEditable
+        {
+
+            get { return !IsEditable; }
+        }
+
+        public ObservableCollection<Specialization> SpecializationsCombo{
+            get {
+                return _specializations;
+            }
+            set
+            {
+                _specializations = value;
+                NotifyPropertyChanged("SpecializationsCombo");
+            }
+        }
+
+        public Specialization SelectedSpecialization {
+            get {
+                return _selectedSpecialization;
+            }
+            set {
+                _selectedSpecialization = value;
+                NotifyPropertyChanged("SelectedSpecialization");
+            }
+        
+        
+        }
+
+        internal void prepareToEdit()
+        {
+            isEditWindow = true;
+            FillUserDates();
+
+        }
+
+        public DelegateCommand RegisterCommand{get {return _registerCommand;} }
+        public DelegateCommand ShowViewCommand { get { return _showViewCommand; } }
+
+        public DelegateCommand EditUserData { get { return _editUserData; } }
+        
 
         public void settoClose(IView close)
         {
 
             this.toClose = close;
-
+           
         }
 
 
         #endregion
-        public RegistrationViewModel()
+       public RegistrationViewModel()
         {
            _registerCommand = new DelegateCommand(Register,CanRegister);
-
+            _showViewCommand = new DelegateCommand(ShowView, null);
+            _specializations = FillSpecialization();
+            _editUserData = new DelegateCommand(EditUser, CanEdit);
+            isEditWindow = false ;
+           
         }
+
+      
 
         public void Register(object parameter) {
             ComboBox comboRole = parameter as ComboBox;
@@ -94,31 +190,45 @@ namespace MedicalClinic.ViewModels
             user.telephone = Telephone;
             user.roleUser = role;
             user.CNP = CNP;
-            
-            if (user !=null)
-            {   
-                users.Add(user);
-                context.SaveChanges();
 
+
+            if (user != null)
+            {
+                users.Add(user);
+                if (user.roleUser == 2)
+                {
+                    var doctors = context.Doctors;
+                    Doctor doctor = new Doctor();
+                    doctor.idSpecialization = SelectedSpecialization.idSpecialization;
+                    doctor.idUser = user.idUser;
+                    doctors.Add(doctor);
+                }
+                context.SaveChanges();
+                
                 MessageBox.Show("Contul dumneavoastra a fost inregistrat cu succes");
                 IView authenticationWindow = null;
-                AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
-                authenticationWindow = new AuthenticationWindow(viewModel);
-                viewModel.settoClose(authenticationWindow);
-                authenticationWindow.Show();
 
+                if (AdminRights)
+                {
+                    AdminViewModel adminViewModel = new AdminViewModel();
+                    IView adminView = new AdminWindow(adminViewModel);
+                    adminViewModel.settoClose(adminView);
+                    adminView.Show();
+                    toClose.Close();
 
+                }
 
-
-
-                toClose.Close();
-
-                
-
+                else
+                {
+                    AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
+                    authenticationWindow = new AuthenticationWindow(viewModel);
+                    viewModel.settoClose(authenticationWindow);
+                    authenticationWindow.Show();
+                    toClose.Close();
+                }
             }
-            else
-                MessageBox.Show("Trebuie sa completati campurile !");
-           
+            else MessageBox.Show("Trebuie sa completati campurile !");
+                    
         }
 
         public bool CanRegister(object parameter) {
@@ -126,8 +236,125 @@ namespace MedicalClinic.ViewModels
             return true;
         }
 
+        public void ShowView(object parameter) 
+        {
+            if (AdminRights)
+            {
+                AdminViewModel adminViewModel = new AdminViewModel();
+                IView adminView = new AdminWindow(adminViewModel);
+                adminViewModel.settoClose(adminView);
+                adminView.Show();
+                toClose.Close();
+
+            }
+
+            else if(DoctorRights)
+            {
+                DoctorViewModel doctorViewModel = new DoctorViewModel();
+                IView doctorView = new DoctorWindow(doctorViewModel);
+                doctorViewModel.settoClose(doctorView);
+                doctorView.Show();
+                toClose.Close();
+            }
+
+            else if(PatientRights) {
+
+                PatientViewModel patientViewModel = new PatientViewModel();
+                IView patientView = new PatientWindow(patientViewModel);
+                patientViewModel.settoClose(patientView);
+                patientView.Show();
+                toClose.Close();
+            }
+
+            else
+            {
+
+                IView authenticationWindow = null;
+                AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
+                authenticationWindow = new AuthenticationWindow(viewModel);
+                viewModel.settoClose(authenticationWindow);
+                authenticationWindow.Show();
+                toClose.Close();
+            }
+
+
+        }
+        private bool CanEdit(object obj)
+        {   
+            CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
+            return customPrincipal.Identity.IsAuthenticated;
+            if (customPrincipal.Identity.IsAuthenticated == false)
+            {
+                MessageBox.Show("Trebuie sa fiti autentificati pentru a va edita datele");
+            }
+        }
+
+        private void EditUser(object obj)
+        {
+            CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
+            string currentEmail = customPrincipal.Identity.Email;
+            var context = new MedicalDBEntities();
+            var query = context.Users
+                       .Where(s => s.email == currentEmail)
+                       .FirstOrDefault<User>();
+            var currentUser = query;
+            currentUser.nameUser = Name;
+            currentUser.surnameUser = Surname;
+            currentUser.CNP = CNP;
+            currentUser.email = Email;
+            currentUser.password = Password;
+            currentUser.telephone = Telephone;
+            /*if (currentUser.roleUser == 2) {
+                var currentDoctor = context.Doctors
+                    .Where(s => s.idUser == currentUser.idUser)
+                    .FirstOrDefault<Doctor>();
+                 currentDoctor.Specialization=SelectedSpecialization;
+
+            }*/
+            context.SaveChanges();
+
+        }
+
+
         #region Methods
-        
+
+        public ObservableCollection<Specialization> FillSpecialization() {
+            using (MedicalDBEntities context = new MedicalDBEntities())
+            {
+                var query = from speci in context.Specializations select speci;
+
+                ObservableCollection<Specialization> spec = new ObservableCollection<Specialization>(query);
+
+
+                return spec;
+            }
+        }
+
+        public void FillUserDates() {
+            CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
+            string currentEmail=customPrincipal.Identity.Email;
+            var context = new MedicalDBEntities();
+                var query = context.Users
+                           .Where(s => s.email == currentEmail)
+                           .FirstOrDefault<User>();
+            var currentUser = query;
+            Name = currentUser.nameUser;
+            Surname = currentUser.surnameUser;
+            CNP = currentUser.CNP;
+            Email = currentUser.email;
+            Password = currentUser.password;
+            Telephone = currentUser.telephone;
+            if (currentUser.roleUser == 2) {
+                var currentDoctor = context.Doctors
+                    .Where(s => s.idUser == currentUser.idUser)
+                    .FirstOrDefault<Doctor>();
+                SelectedSpecialization = currentDoctor.Specialization;
+            }
+            
+            
+
+        }
+      
 
 
         #endregion

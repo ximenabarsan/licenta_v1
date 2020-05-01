@@ -12,28 +12,31 @@
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="AuthenticationWindow" Height="450" Width="800">
+        Title="AuthenticationWindow" Height="471" Width="817">
     <Grid>
 
         <Grid.ColumnDefinitions>
-
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1.2*" />
         </Grid.ColumnDefinitions>
-        <Label  HorizontalAlignment="Left" Margin="350,-1,0,-1" VerticalAlignment="Top" Height="422" Width="443">
-            <Label.Background>
-                <ImageBrush ImageSource="/MedicalClinic;component/images/medical.jpg"/>
-            </Label.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="2*"/>
 
-        </Label>
-        <Label Content="Autentificare" HorizontalAlignment="Left" Margin="81,37,0,344" Width="174" FontSize="25" FontWeight="Bold" Foreground="#FF00B6FF"/>
 
-
-
-        <Grid HorizontalAlignment="Left" Height="101" Margin="-3,76,0,0" VerticalAlignment="Top" Width="374">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="58" Margin="16,9,0,0" VerticalAlignment="Top" Width="324">
-                <materialDesign:PackIcon Kind="Account" Width="52" Height="42"  
-                Foreground="{Binding BorderBrush, ElementName=EmailTextBox}" VerticalAlignment="Bottom" Margin="0 0" RenderTransformOrigin="0.384,-0.374" />
-                <TextBox x:Name="EmailTextBox" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,18,12,4"  Width="233" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
-                 Text="{Binding Email,UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}">
+            </Grid.RowDefinitions>
+            <Label Content="Autentificare" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Width="174" FontSize="25" FontWeight="Bold" Foreground="#FF00B6FF"/>
+            <Grid Grid.Row="1">
+                <materialDesign:PackIcon Kind="Account" Width="50" Height="43"  
+                Foreground="{Binding BorderBrush, ElementName=EmailTextBox}" VerticalAlignment="Top" Margin="9,15,0,0"/>
+                <TextBox x:Name="EmailTextBox" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="53" VerticalAlignment="Top" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Text="{Binding Email,UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Margin="55,0,37.8,0">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <StackPanel>
@@ -50,56 +53,60 @@
                         </ControlTemplate>
                     </Validation.ErrorTemplate>
                 </TextBox>
-
-            </StackPanel>
-
-        </Grid>
-        <Grid HorizontalAlignment="Left" Height="59" Margin="-21,160,0,201" VerticalAlignment="Center" Width="374">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="57" Margin="41,4,0,-2" VerticalAlignment="Center" Width="315" RenderTransformOrigin="0.737,0.445" Grid.ColumnSpan="2">
+            </Grid>
+            <Grid Grid.Row="2">
                 <materialDesign:PackIcon Kind="Key" Width="35" Height="48"  
-                Foreground="{Binding BorderBrush, ElementName=passwordBox}" VerticalAlignment="Bottom" Margin="0,0,0,0.8" />
+                Foreground="{Binding BorderBrush, ElementName=passwordBox}" VerticalAlignment="Top" Margin="16,12,0,0" RenderTransformOrigin="0.963,0.523" />
                 <PasswordBox x:Name="passwordBox"
                  materialDesign:HintAssist.Hint="Parola"
-                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="5,0,12,12.8" Width="242" 
-                 VerticalAlignment="Bottom" Height="40" BorderBrush="#FF00B6FF" CaretBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="56,0,37.8,0" 
+                 VerticalAlignment="Top" Height="53" BorderBrush="#FF00B6FF" CaretBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
                  />
 
-            </StackPanel>
-        </Grid>
+            </Grid>
 
-
-        <Button
+            <Grid Grid.Row="3">
+                <Label Content="Nu aveti un cont?  Inregistrati-va aici!" VerticalAlignment="Center" HorizontalAlignment="Center"   Height="27" Width="238" FontWeight="Bold" Foreground="#DD4F4949"/>
+                <Button
                     Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                    Height="Auto"
+                    Height="50"
+            Width="150"
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
                     materialDesign:ButtonAssist.CornerRadius="25"
-                    ToolTip="Apasa aici pentru a te loga" Margin="92,236,544.6,140"  Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+                    ToolTip="Apasa aici pentru a te loga"  Background="#FF00B6FF" BorderBrush="#FF00B6FF" 
                     Command="{Binding LoginCommand, Mode=OneTime}"
-                    CommandParameter="{Binding ElementName=passwordBox}">
-            <TextBlock
-                    Text="Login" Foreground="#FFF0F0F9" FontWeight="Bold" FontSize="18" />
-        </Button>
+                    CommandParameter="{Binding ElementName=passwordBox}"
+                    VerticalAlignment="Top" Margin="100,1,113.2,0">
+                    <TextBlock
+                    Text="Login" Foreground="#FFF0F0F9"  FontWeight="Bold" FontSize="18" />
+                </Button>
 
 
 
-        <Label Content="       Nu aveti un cont?  Inregistrati-va aici!" HorizontalAlignment="Left" Margin="29,291,0,0" VerticalAlignment="Top" Height="33" Width="292" FontWeight="Bold" Foreground="#DD4F4949"/>
-        <Button
+                <Button
             Style="{StaticResource MaterialDesignRaisedDarkButton}"
-            Height="Auto"
+            Height="50"
+            Width="150"
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+           VerticalAlignment="Bottom"
             materialDesign:ButtonAssist.CornerRadius="25"
-            ToolTip="Apasa aici pentru a creea un nou cont"
-            Margin="90,327,539.6,46"  Background="#FF00B6FF" BorderBrush="#FF00B6FF"
-            Command="{Binding ShowRegisterViewCommand}" CommandParameter="{Binding ElementName=AuthenticationWindow}">
-            <TextBlock
+            ToolTip="Apasa aici pentru a crea un nou cont"
+            Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+            Command="{Binding ShowRegisterViewCommand}" Margin="105,0,108.2,16" >
+                    <TextBlock
                 Text="Register" Foreground="#FFF0F0F9" FontWeight="Bold" FontSize="18" />
 
-        </Button>
+                </Button>
 
-        <TextBox Text="{Binding Status}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Left" Height="41" Margin="0,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370" Foreground="#FF00B6FF" Visibility="Hidden" />
-        <TextBox Text="{Binding AuthenticatedUser,Mode=OneWay}" Foreground="#FF00B6FF" BorderBrush="#FF00B6FF" FontSize="16" FontWeight="Bold"  HorizontalAlignment="Left" Height="35" Margin="1,1,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="347" />
+
+            </Grid>
+        </Grid>
+        <Label Grid.Column="1" >
+            <Label.Background>
+                <ImageBrush ImageSource="/MedicalClinic;component/images/medical.jpg"/>
+            </Label.Background>
+        </Label>
 
     </Grid>
+
 </Window>

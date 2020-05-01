@@ -14,10 +14,25 @@ namespace MedicalClinic
     
     public partial class Doctor
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Doctor()
+        {
+            this.Schedules = new HashSet<Schedule>();
+            this.Appoiments = new HashSet<Appoiment>();
+            this.Treatments = new HashSet<Treatment>();
+        }
+    
         public int idDoctor { get; set; }
         public int idSpecialization { get; set; }
         public int idUser { get; set; }
     
         public virtual User User { get; set; }
+        public virtual Specialization Specialization { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Schedule> Schedules { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appoiment> Appoiments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Treatment> Treatments { get; set; }
     }
 }

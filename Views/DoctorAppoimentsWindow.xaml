@@ -1,0 +1,43 @@
+﻿<Window x:Class="MedicalClinic.Views.DoctorAppoimentsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedicalClinic.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="DoctorAppoimentsWindow" Height="465.042" Width="855.153">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <DatePicker
+        x:Name="FutureDatePicker"
+        SelectedDate="{Binding Date}" 
+        
+        Grid.Column="0"
+        Width="180" Margin="27,43,586.6,36.8"/>
+            <Button Height="50" Width="100" Background="#FF00B6FF"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    Content="Back"
+    Padding="10" Command="{Binding ShowDoctorViewCommand}" RenderTransformOrigin="0.17,0.666" Margin="579,33,114.6,21.8" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <DataGrid Background="White"  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+    Padding="10" ItemsSource="{Binding DataSource}" AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nume Pacient" Binding="{Binding NameUser}" />
+                    <DataGridTextColumn Header="Prenume Pacient" Binding="{Binding SurnameUser}"/>
+                    <DataGridTextColumn Header="CNP" Binding="{Binding Cnp}" />
+                    <DataGridTextColumn Header="Data" Binding="{Binding Date}" />
+                    <DataGridTextColumn Header="Denumire serviciu oferit" Binding="{Binding Service}"/>
+                    <DataGridTextColumn Header="Ora inceput" Binding="{Binding StartHour}"/>
+                    <DataGridTextColumn Header="Ora sfarsit" Binding="{Binding FinishHour}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>
