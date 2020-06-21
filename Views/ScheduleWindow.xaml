@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MedicalClinic.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ScheduleWindow" Height="450" Width="800">
+        Title="ScheduleWindow" Height="500" Width="850">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -93,7 +93,7 @@
                 3.Alege ora iesire
             </materialDesign:Card>
             <ComboBox x:Name="comboDoctors"
-            materialDesign:HintAssist.Hint="Doctori"
+            materialDesign:HintAssist.Hint="Finalizare program"
             Margin="46.4,108,38.4,48.4"
             Grid.Column="2"
             Grid.Row="0"

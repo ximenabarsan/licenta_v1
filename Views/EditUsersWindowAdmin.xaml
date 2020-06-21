@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MedicalClinic.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="EditUsersWindowAdmin" Height="504.623" Width="820.033">
+        Title="EditUsersWindowAdmin"  Height="500" Width="850">
     <Grid>
 
         <Grid.RowDefinitions>

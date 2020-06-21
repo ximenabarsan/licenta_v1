@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,27 +33,32 @@ namespace MedicalClinic.Views
         void Hide();
     }
 
-    public partial class AuthenticationWindow : Window,IView
-    {
-       
-        
-            public AuthenticationWindow (AuthenticationViewModel viewModel)
-            {
-                ViewModel = viewModel;
-                InitializeComponent();
-            }
 
-            #region IView Members
-            public IViewModel ViewModel
-            {
-                get { return DataContext as IViewModel; }
-                set { DataContext = value; }
-            }
+    public partial class AuthenticationWindow : Window, IView
+    {
+
+        public AuthenticationWindow(AuthenticationViewModel viewModel)
+        {
+            ViewModel = viewModel;
+            InitializeComponent();
+
+
+        }
+
+
+        #region IView Members
+        public IViewModel ViewModel
+        {
+            get { return DataContext as IViewModel; }
+            set { DataContext = value; }
+
+
+        }
 
         #endregion
 
-       
-    }
 
     }
+
+}
 

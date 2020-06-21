@@ -45,6 +45,7 @@ namespace MedicalClinic.ViewModels
             _maxDate = DateTime.Today.AddDays(30);
             _selectedDate = DateTime.Today.AddDays(1);
             _addAppoimentCommand = new DelegateCommand(AddAppoiment,null);
+            
 
         }
 
@@ -121,7 +122,7 @@ namespace MedicalClinic.ViewModels
             set {
                 _selectedDate = value;
                 NotifyPropertyChanged("SelectedDate");
-                //MessageBox.Show(SelectedDate.ToShortDateString());
+               
                if (SelectedDate != null && SelectedDoctor.Value!=null)
                {
                     this.AvailableHours = FillAvailableHours();
@@ -251,20 +252,21 @@ namespace MedicalClinic.ViewModels
                     context.Appoiments.Add(ap);
                     context.SaveChanges();
                     MessageBox.Show("Programare realizata cu succes");
+                    _selectedDate = DateTime.Today.AddDays(1);
+                    NotifyPropertyChanged("SelectedDate");
+                    _selectedSpecialization = null;
+                    NotifyPropertyChanged("SelectedSpecialization");
+                    SelectedService = null;
+                    NotifyPropertyChanged("SelectedService");
+                    _selectedStartHour= 0;
+                    NotifyPropertyChanged("SelectedStartHour");
+                   
+
                 }
                 else MessageBox.Show("Introduceti toate datele!");
             }
 
         }
-
-       /* private bool CanAddAppoiment(object obj)
-        {
-            if (SelectedSpecialization != null && SelectedService != null && SelectedDoctor.Value != null && SelectedStartHour.ToString() != null)
-            {
-                return true;
-            }
-            return false;
-        }*/
 
         #endregion
 
@@ -363,7 +365,7 @@ namespace MedicalClinic.ViewModels
         
             using (var context = new MedicalDBEntities())
             {
-                //if (_services != null) _services.Clear();
+              
                 var query = from st in context.Services
                             where st.idSpecialization == id
                             select st;
@@ -422,7 +424,7 @@ namespace MedicalClinic.ViewModels
                 }
                
 
-                //if (query == null) { MessageBox.Show("Nu sunt servicii la aceasta specializare"); }
+             
                 return doctorsName;
                 
                 

@@ -1,9 +1,10 @@
-﻿using MedicalClinic.Views;
+﻿using MedicalClinic.Model;
+using MedicalClinic.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Security;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace MedicalClinic.ViewModels
 {
     public interface IViewModel { }
 
-    public class AuthenticationViewModel : IViewModel, INotifyPropertyChanged,INotifyDataErrorInfo
+    public class AuthenticationViewModel : IViewModel , INotifyPropertyChanged, INotifyDataErrorInfo
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly DelegateCommand _loginCommand;
@@ -23,7 +24,7 @@ namespace MedicalClinic.ViewModels
         private string _status;
         private readonly Dictionary<string, ICollection<string>>
         _validationErrors = new Dictionary<string, ICollection<string>>();
-        private readonly IValidationService validationservice=new IValidationService();
+        private readonly IValidationService validationservice;
         IView viewtoClose;
 
 
@@ -32,9 +33,12 @@ namespace MedicalClinic.ViewModels
             _authenticationService = authenticationService;
             _loginCommand = new DelegateCommand(Login, CanLogin);
             _showRegisterViewCommand = new DelegateCommand(ShowRegisterView, null);
+            validationservice = new IValidationService();
+          
             
         }
 
+       
 
 
         #region Properties
@@ -42,9 +46,11 @@ namespace MedicalClinic.ViewModels
         {
             get { return _email; }
             set { _email = value; NotifyPropertyChanged("Email");
-                ValidateEmailAuthentication(Email);
+               ValidateEmailAuthentication(Email);
                 }
         }
+
+      
 
         public string AuthenticatedUser
         {
@@ -76,18 +82,28 @@ namespace MedicalClinic.ViewModels
         }
         #endregion
 
-        #region Commands
-        public DelegateCommand LoginCommand { get { return _loginCommand; } }
+
+
+
+    #region Commands
+    public DelegateCommand LoginCommand { get { return _loginCommand; } }
 
         public DelegateCommand ShowRegisterViewCommand { get { return _showRegisterViewCommand; } }
         #endregion
 
-        private void Login(object parameter)
+      
+
+
+
+    private void Login(object parameter)
         {
             PasswordBox passwordBox = parameter as PasswordBox;
             string clearTextPassword = passwordBox.Password;
             try
             {
+                
+
+               
                
                 User user = _authenticationService.AuthenticateUser(Email, clearTextPassword);
                 CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
@@ -101,8 +117,8 @@ namespace MedicalClinic.ViewModels
                 customPrincipal.Identity = new CustomIdentity(user.nameUser, user.idUser, rol, user.email, user.telephone, user.surnameUser, user.CNP, user.password);
 
                 //Fac update la UI
-                NotifyPropertyChanged("AuthenticatedUser");
-                NotifyPropertyChanged("IsAuthenticated");
+                //NotifyPropertyChanged("AuthenticatedUser");
+                //NotifyPropertyChanged("IsAuthenticated");
                 _loginCommand.RaiseCanExecuteChanged();
                 
                 // Resetez valorile
@@ -213,7 +229,7 @@ namespace MedicalClinic.ViewModels
         }
         #endregion
 
-        #region INotifuDataErrorsMembers
+        #region INotifyDataErrorsMembers
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
         private void RaiseErrorsChanged(string propertyName)
         {
@@ -235,9 +251,9 @@ namespace MedicalClinic.ViewModels
             get { return _validationErrors.Count > 0; }
         }
 
-        #endregion
+        #endregion 
 
-        #region ValidationRegion
+       #region ValidationRegion
         private async void ValidateEmailAuthentication(string email)
         {
             const string propertyKey = "Email";
@@ -252,6 +268,7 @@ namespace MedicalClinic.ViewModels
             {
                 _validationErrors[propertyKey] = validationErrors;
                 RaiseErrorsChanged(propertyKey);
+               
             }
             else if (_validationErrors.ContainsKey(propertyKey))
             {
@@ -259,6 +276,9 @@ namespace MedicalClinic.ViewModels
                 RaiseErrorsChanged(propertyKey);
             }
         }
+
+
+
         #endregion
     }
 }

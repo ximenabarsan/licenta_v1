@@ -31,5 +31,7 @@ namespace MedicalClinic.Views
             get { return DataContext as IViewModel; }
             set { DataContext = value; }
         }
+
+        
     }
 }

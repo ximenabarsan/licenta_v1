@@ -10,7 +10,8 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverterRegionDoc"/>
     </Window.Resources>
-    <Grid>
+    <Grid
+        Background="Azure">
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition/>
@@ -18,13 +19,13 @@
         <Grid Grid.Row="0">
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding DataSource}" Background="White">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nume pacient" Binding="{Binding NamePatient}" Visibility="{Binding DoctorRights, Converter={StaticResource booleanToVisibilityConverterRegionDoc}}"/>
-                    <DataGridTextColumn Header="Prenume Pacient" Binding="{Binding SurnamePatient}" Visibility="{Binding DoctorRights, Converter={StaticResource booleanToVisibilityConverterRegionDoc}}"/>
-                    <DataGridTextColumn Header="CNP"  Binding="{Binding Cnp}" Visibility="{Binding DoctorRights, Converter={StaticResource booleanToVisibilityConverterRegionDoc}}"/>
+                    <DataGridTextColumn Header="Nume pacient" Binding="{Binding NamePatient}" />
+                    <DataGridTextColumn Header="Prenume Pacient" Binding="{Binding SurnamePatient}" />
+                    <DataGridTextColumn Header="CNP"  Binding="{Binding Cnp}" />
                     <DataGridTextColumn Header="Diagnostic" Binding="{Binding Diagnosis}" />
-                    <DataGridTextColumn Header="NumeDoctor" Binding="{Binding NameDoctor}"  Visibility="{Binding PatientRights, Converter={StaticResource booleanToVisibilityConverterRegionDoc}}" />
-                    <DataGridTextColumn Header="Data inpere tratament" Binding="{Binding StartDate}"  />
-                    <DataGridTextColumn Header="Data sfarsit tratament" Binding="{Binding FinishDate}" />
+                    <DataGridTextColumn Header="NumeDoctor" Binding="{Binding NameDoctor}"   />
+                    <DataGridTextColumn Header="Data inpere tratament" Binding="{Binding StartDate,  StringFormat=\{0:dd.MM.yyyy\}}"  />
+                    <DataGridTextColumn Header="Data sfarsit tratament" Binding="{Binding FinishDate,StringFormat=\{0:dd.MM.yyyy\}}" />
                     <DataGridTextColumn Header="Medicamente" Binding="{Binding Medicines}" />
                     <DataGridTextColumn Header="Observatii medicale" Binding="{Binding Observations}" />
 
@@ -33,28 +34,42 @@
             
         </Grid>
         <Grid Grid.Row="1">
-            <TextBox x:Name="cnp" materialDesign:HintAssist.Hint="CNP"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
-                 Text="{Binding Cnp, Mode=TwoWay}"  Height="60" Width="200" Visibility="{Binding DoctorRights, Converter={StaticResource booleanToVisibilityConverterRegionDoc}}" Margin="88,2,844.8,94" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <TextBox x:Name="cnp" materialDesign:HintAssist.Hint="CNP"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF" Foreground="#FF00B6FF" FontWeight="ExtraBold"
+                 Text="{Binding Cnp, Mode=TwoWay}"  Height="60" Width="200" Visibility="{Binding DoctorRights, Converter={StaticResource booleanToVisibilityConverterRegionDoc}}"  VerticalAlignment="Center" Margin="146,27,220.4,69" />
+                <Button
+
+  Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+  ToolTip="Cauta pacientul" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
+   Command="{Binding SearchUserCommand}"
+                 Visibility="{Binding DoctorRights, Converter={StaticResource booleanToVisibilityConverterRegionDoc}}"
+                    VerticalAlignment="Center" 
+                    Height="30" Width="30" Margin="391,44,135.4,72">
+                   
+                    <materialDesign:PackIcon
+    Kind="Search"
+    Height="20"
+    Width="24" />
+                </Button>
+            </Grid>
+            <Grid Grid.Column="1">
             <Button
-            Height="60"
-            Width="120"
+            Height="50"
+            Width="100"
             Style="{StaticResource MaterialDesignFlatMidBgButton}"
             ToolTip="Apasa pentru a reveni la pagina anterioara"   Content="Back"
             Command="{Binding ShowViewCommand,UpdateSourceTrigger=PropertyChanged}"
             Background="#FF00B6FF" BorderBrush="#FF00B6FF"
-            materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="917,31,95.8,65" RenderTransformOrigin="0.54,0.144"
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right" Margin="0,48,179.4,48"
             />
-            <Button
-                VerticalAlignment="Top"
-  Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
-  ToolTip="Cauta pacientul" Background="#FF00B6FF" BorderBrush="#FF00B6FF"
-   Command="{Binding SearchUserCommand}" Margin="311,18,781.8,0"
-                 Visibility="{Binding DoctorRights, Converter={StaticResource booleanToVisibilityConverterRegionDoc}}">
-                <materialDesign:PackIcon
-    Kind="Search"
-    Height="20"
-    Width="24" />
-            </Button>
+
+            </Grid>
         </Grid>
 
     </Grid>

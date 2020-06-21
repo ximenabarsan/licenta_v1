@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MedicalClinic.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="PatientAppoimentsWindow" Height="464.4" Width="809.6">
+        Title="PatientAppoimentsWindow" Height="500" Width="850">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>

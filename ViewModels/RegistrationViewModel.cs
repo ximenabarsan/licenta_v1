@@ -14,7 +14,7 @@ using System.Windows.Documents;
 namespace MedicalClinic.ViewModels
 {
 
-    public class RegistrationViewModel : INotifyPropertyChanged, IViewModel
+    public class RegistrationViewModel : INotifyPropertyChanged, IViewModel, INotifyDataErrorInfo
     {
 
 
@@ -24,12 +24,15 @@ namespace MedicalClinic.ViewModels
         private string _email;
         private string _password;
         private string _telephone;
-        private ObservableCollection<Specialization> _specializations = new ObservableCollection<Specialization>();
+        private ObservableCollection<Specialization> _specializations;
         private Specialization _selectedSpecialization;
         private DelegateCommand _registerCommand;
         private DelegateCommand _showViewCommand;
         private DelegateCommand _editUserData;
         IView toClose;
+        private readonly Dictionary<string, ICollection<string>>
+       _validationErrors = new Dictionary<string, ICollection<string>>();
+        private readonly IValidationService validationservice;
 
 
         private bool isEditWindow;
@@ -41,33 +44,44 @@ namespace MedicalClinic.ViewModels
         public string Name
         {
             get { return _name; }
-            set { _name = value; NotifyPropertyChanged("Name"); }
+            set { _name = value; NotifyPropertyChanged("Name");
+                ValidateName(_name);
+            }
         }
         public string Surname
         {
             get { return _surname; }
-            set { _surname = value; NotifyPropertyChanged("Surname"); }
+            set { _surname = value; NotifyPropertyChanged("Surname");
+                ValidateSurname(_surname);
+            }
         }
         public string CNP
         {
             get { return _cnp; }
-            set { _cnp = value; NotifyPropertyChanged("CNP"); }
+            set { _cnp = value; NotifyPropertyChanged("CNP");
+                ValidateCnp(_cnp);
+            }
         }
         public string Email
         {
             get { return _email; }
-            set { _email = value; NotifyPropertyChanged("Email"); }
+            set { _email = value; NotifyPropertyChanged("Email");
+                ValidateEmail(_email); }
         }
 
         public string Password
         {
             get { return _password; }
-            set { _password = value; NotifyPropertyChanged("Password"); }
+            set { _password = value; NotifyPropertyChanged("Password");
+                ValidatePassword(_password);
+            }
         }
         public string Telephone
         {
             get { return _telephone; }
-            set { _telephone = value; NotifyPropertyChanged("Telephone"); }
+            set { _telephone = value; NotifyPropertyChanged("Telephone");
+                ValidateTelephone(_telephone);
+            }
         }
 
       
@@ -166,12 +180,13 @@ namespace MedicalClinic.ViewModels
         #endregion
        public RegistrationViewModel()
         {
-           _registerCommand = new DelegateCommand(Register,CanRegister);
+            _specializations =  new ObservableCollection<Specialization>();
+            _registerCommand = new DelegateCommand(Register,CanRegister);
             _showViewCommand = new DelegateCommand(ShowView, null);
             _specializations = FillSpecialization();
             _editUserData = new DelegateCommand(EditUser, CanEdit);
             isEditWindow = false ;
-           
+            validationservice= new IValidationService();
         }
 
       
@@ -183,51 +198,54 @@ namespace MedicalClinic.ViewModels
             var users = context.Users;
             User user = new User();
             User user1 = new User();
-            user.email = Email; 
-            user.nameUser = Name;
-            user.surnameUser = Surname;
-            user.password = Password;
-            user.telephone = Telephone;
-            user.roleUser = role;
-            user.CNP = CNP;
-
-
-            if (user != null)
+            if (Email != null && Name != null && Surname != null && CNP != null && Password != null && Telephone != null && _validationErrors.Values.Count==0)
             {
-                users.Add(user);
-                if (user.roleUser == 2)
+                if (this.CheckUser(Email))
                 {
-                    var doctors = context.Doctors;
-                    Doctor doctor = new Doctor();
-                    doctor.idSpecialization = SelectedSpecialization.idSpecialization;
-                    doctor.idUser = user.idUser;
-                    doctors.Add(doctor);
-                }
-                context.SaveChanges();
-                
-                MessageBox.Show("Contul dumneavoastra a fost inregistrat cu succes");
-                IView authenticationWindow = null;
+                    user.email = Email;
+                    user.nameUser = Name;
+                    user.surnameUser = Surname;
+                    user.password = Password;
+                    user.telephone = Telephone;
+                    user.roleUser = role;
+                    user.CNP = CNP;
+                    users.Add(user);
 
-                if (AdminRights)
-                {
-                    AdminViewModel adminViewModel = new AdminViewModel();
-                    IView adminView = new AdminWindow(adminViewModel);
-                    adminViewModel.settoClose(adminView);
-                    adminView.Show();
-                    toClose.Close();
+                    if (user.roleUser == 2 && SelectedSpecialization != null)
+                    {
+                        var doctors = context.Doctors;
+                        Doctor doctor = new Doctor();
+                        doctor.idSpecialization = SelectedSpecialization.idSpecialization;
+                        doctor.idUser = user.idUser;
+                        doctors.Add(doctor);
+                    }
+                    context.SaveChanges();
 
-                }
+                    MessageBox.Show("Contul dumneavoastra a fost inregistrat cu succes");
+                    IView authenticationWindow = null;
 
-                else
-                {
-                    AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
-                    authenticationWindow = new AuthenticationWindow(viewModel);
-                    viewModel.settoClose(authenticationWindow);
-                    authenticationWindow.Show();
-                    toClose.Close();
+                    if (AdminRights)
+                    {
+                        AdminViewModel adminViewModel = new AdminViewModel();
+                        IView adminView = new AdminWindow(adminViewModel);
+                        adminViewModel.settoClose(adminView);
+                        adminView.Show();
+                        toClose.Close();
+
+                    }
+
+                    else
+                    {
+                        AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
+                        authenticationWindow = new AuthenticationWindow(viewModel);
+                        viewModel.settoClose(authenticationWindow);
+                        authenticationWindow.Show();
+                        toClose.Close();
+                    }
                 }
+                else { MessageBox.Show("Exista deja un cont cu acest email"); }
             }
-            else MessageBox.Show("Trebuie sa completati campurile !");
+            else MessageBox.Show("Va rugăm să introduceți toate datele");
                     
         }
 
@@ -283,10 +301,7 @@ namespace MedicalClinic.ViewModels
         {   
             CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
             return customPrincipal.Identity.IsAuthenticated;
-            if (customPrincipal.Identity.IsAuthenticated == false)
-            {
-                MessageBox.Show("Trebuie sa fiti autentificati pentru a va edita datele");
-            }
+           
         }
 
         private void EditUser(object obj)
@@ -304,13 +319,6 @@ namespace MedicalClinic.ViewModels
             currentUser.email = Email;
             currentUser.password = Password;
             currentUser.telephone = Telephone;
-            /*if (currentUser.roleUser == 2) {
-                var currentDoctor = context.Doctors
-                    .Where(s => s.idUser == currentUser.idUser)
-                    .FirstOrDefault<Doctor>();
-                 currentDoctor.Specialization=SelectedSpecialization;
-
-            }*/
             context.SaveChanges();
 
         }
@@ -354,7 +362,23 @@ namespace MedicalClinic.ViewModels
             
 
         }
-      
+
+        public bool CheckUser(string email)
+        {
+            using (var context = new MedicalDBEntities())
+            {
+                var query = context.Users
+                   .Where(s => s.email == email)
+                   .FirstOrDefault<User>();
+               
+                if (query != null)
+                {
+                    return false;
+
+                }
+            }
+            return true;
+        }
 
 
         #endregion
@@ -368,5 +392,172 @@ namespace MedicalClinic.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        #region INotifyDataErrorInfo members
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        private void RaiseErrorsChanged(string propertyName)
+        {
+            if (ErrorsChanged != null)
+                ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        public System.Collections.IEnumerable GetErrors(string propertyName)
+        {
+            if (string.IsNullOrEmpty(propertyName)
+                || !_validationErrors.ContainsKey(propertyName))
+                return null;
+
+            return _validationErrors[propertyName];
+        }
+
+        public bool HasErrors
+        {
+            get { return _validationErrors.Count > 0; }
+        }
+        #endregion
+
+
+        private async void ValidateEmail(string username)
+        {
+            const string propertyKey = "Email";
+            ICollection<string> validationErrors = null;
+            /* Call service asynchronously */
+            bool isValid = await Task<bool>.Run(() =>
+            {
+                return validationservice.ValidateEmailRegister(username, out validationErrors);
+            })
+            .ConfigureAwait(false);
+
+            if (!isValid)
+            {
+                
+                _validationErrors[propertyKey] = validationErrors;
+                RaiseErrorsChanged(propertyKey);
+            }
+            else if (_validationErrors.ContainsKey(propertyKey))
+            {
+               
+                _validationErrors.Remove(propertyKey);
+                RaiseErrorsChanged(propertyKey);
+            }
+        }
+        private async void ValidatePassword(string password)
+        {
+            const string propertyKey = "Password";
+            ICollection<string> validationErrors = null;
+            bool isValid = await Task<bool>.Run(() =>
+            {
+                return validationservice.ValidatePasswordRegistration(password, out validationErrors);
+            })
+            .ConfigureAwait(false);
+
+            if (!isValid)
+            {
+               
+                _validationErrors[propertyKey] = validationErrors;
+                RaiseErrorsChanged(propertyKey);
+            }
+            else if (_validationErrors.ContainsKey(propertyKey))
+            {
+              
+                _validationErrors.Remove(propertyKey);
+                RaiseErrorsChanged(propertyKey);
+            }
+        }
+        private async void ValidateName(string name)
+        {
+            const string propertyKey = "Name";
+            ICollection<string> validationErrors = null;
+            bool isValid = await Task<bool>.Run(() =>
+            {
+                return validationservice.ValidateNameRegister(name, out validationErrors);
+            })
+            .ConfigureAwait(false);
+
+            if (!isValid)
+            {
+               
+                _validationErrors[propertyKey] = validationErrors;
+                RaiseErrorsChanged(propertyKey);
+            }
+            else if (_validationErrors.ContainsKey(propertyKey))
+            {
+                
+                _validationErrors.Remove(propertyKey);
+               RaiseErrorsChanged(propertyKey);
+            }
+        }
+        private async void ValidateSurname(string surname)
+        {
+            const string propertyKey = "Surname";
+            ICollection<string> validationErrors = null;
+           
+            bool isValid = await Task<bool>.Run(() =>
+            {
+                return validationservice.ValidateNameRegister(surname, out validationErrors);
+            })
+            .ConfigureAwait(false);
+
+            if (!isValid)
+            {
+                
+                _validationErrors[propertyKey] = validationErrors;
+                RaiseErrorsChanged(propertyKey);
+            }
+            else if (_validationErrors.ContainsKey(propertyKey))
+            {
+               
+                _validationErrors.Remove(propertyKey);
+                RaiseErrorsChanged(propertyKey);
+            }
+        }
+        private async void ValidateTelephone(string telephone)
+        {
+            const string propertyKey = "Telephone";
+            ICollection<string> validationErrors = null;
+          
+            bool isValid = await Task<bool>.Run(() =>
+            {
+                return validationservice.ValidateTelephoneRegister(telephone, out validationErrors);
+            })
+            .ConfigureAwait(false);
+
+            if (!isValid)
+            {
+               
+                _validationErrors[propertyKey] = validationErrors;
+                RaiseErrorsChanged(propertyKey);
+            }
+            else if (_validationErrors.ContainsKey(propertyKey))
+            {
+              
+                _validationErrors.Remove(propertyKey);
+                 RaiseErrorsChanged(propertyKey);
+            }
+        }
+        private async void ValidateCnp(string cnp)
+        {
+            const string propertyKey = "CNP";
+            ICollection<string> validationErrors = null;
+           
+            bool isValid = await Task<bool>.Run(() =>
+            {
+                return validationservice.ValidateCnpRegister(cnp, out validationErrors);
+            })
+            .ConfigureAwait(false);
+
+            if (!isValid)
+            {
+                
+                _validationErrors[propertyKey] = validationErrors;
+                RaiseErrorsChanged(propertyKey);
+            }
+            else if (_validationErrors.ContainsKey(propertyKey))
+            {
+               
+                _validationErrors.Remove(propertyKey);
+                RaiseErrorsChanged(propertyKey);
+            }
+        }
     }
 }

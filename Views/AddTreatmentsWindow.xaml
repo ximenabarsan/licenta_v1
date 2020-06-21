@@ -123,17 +123,11 @@
         <Grid Grid.Row="1" Grid.Column="1">
             <DatePicker
         x:Name="FutureDatePicker"
-        materialDesign:HintAssist.Hint="Data inceput tratament" Foreground="Black" FontWeight="Bold" Height="60"
-        DisplayDateStart="{Binding TomorrowDate}"
-        DisplayDateEnd="{Binding MaxDateAppoiment}"
-        SelectedDate="{Binding StartDate}" 
+        materialDesign:HintAssist.Hint="Data inceput tratament" Foreground="Black" FontWeight="Bold" Height="60" 
         Margin="21,17,25.8,109.4"/>
             <DatePicker
         x:Name="FutureDatePicker2"
         materialDesign:HintAssist.Hint="Data final tratament" Foreground="Black" FontWeight="Bold" Height="60"
-        DisplayDateStart="{Binding TomorrowDate}"
-        DisplayDateEnd="{Binding MaxDateAppoiment}"
-        SelectedDate="{Binding FinishDate}" 
         Margin="25,101,21.8,25.4"
         Grid.Column="0"/>
         </Grid>

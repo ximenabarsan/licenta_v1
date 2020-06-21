@@ -7,11 +7,11 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         
         mc:Ignorable="d"
-        Title="ServicesWindow" Height="500" Width="820">
+        Title="ServicesWindow" Height="500" Width="850">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverterRegion"/>
     </Window.Resources>
-    <Grid>
+    <Grid Background="Azure">
         <Grid.RowDefinitions>
             <RowDefinition Height="2.5*">
 
@@ -23,10 +23,13 @@
         </DataGrid>-->
 
         <DataGrid
+            Background="Azure"
+            Foreground="#FF00B6FF"
+            FontWeight="Bold"
     materialDesign:ShadowAssist.ShadowDepth="Depth3"
     Padding="32"
             Grid.Row="0"
-  Background="White"
+ 
   Margin="0,-2,-0.4,0"
   ItemsSource="{Binding DataSource ,UpdateSourceTrigger=PropertyChanged}"
   SelectedItem="{Binding SelectedService, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -76,6 +79,9 @@
   HorizontalAlignment="Left"
   Height="25"
   Width="100"
+  Foreground="#FF00B6FF"
+  FontWeight="ExtraBold"
+  BorderBrush="#FF00B6FF"
   Text="{Binding SelectedService.NameService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
    Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}" RenderTransformOrigin="0.979,0.685" Margin="22,19,0,0">
         </TextBox>
@@ -88,7 +94,11 @@
   Height="25"
   Width="100"
  Margin="153,17,0,0" Text="{Binding SelectedService.CostService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+  Foreground="#FF00B6FF"
+  FontWeight="ExtraBold"
+  BorderBrush="#FF00B6FF"
 Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}" Grid.Row="1">
+
         </TextBox>
         <ComboBox
             materialDesign:HintAssist.Hint="Specializare" Margin="294,17,0,0"
@@ -97,11 +107,13 @@ Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibility
             HorizontalAlignment="Left"
             Height="25"
             Width="100"
+            Foreground="#FF00B6FF"
+            FontWeight="ExtraBold"
+            BorderBrush="#FF00B6FF"
             ItemsSource="{Binding SpecializationsCombo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Visibility ="{Binding AdminRights, Converter={StaticResource booleanToVisibilityConverterRegion}}" Grid.Row="1">
 
         </ComboBox>
-        <!-- <TextBox Text="{Binding SelectedService.NameSpecialization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="81" Margin="456,0,152,56" VerticalAlignment="Bottom" />-->
         <Button
     Style="{StaticResource MaterialDesignFlatMidBgButton}"
     Grid.Row="1"

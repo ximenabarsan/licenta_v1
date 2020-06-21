@@ -32,5 +32,6 @@ namespace MedicalClinic
         {
             return nameSpecialization;
         }
+
     }
 }

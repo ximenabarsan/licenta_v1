@@ -24,8 +24,7 @@ namespace MedicalClinic.ViewModels
         private DelegateCommand _addSelectedMedicinesCommand;
         private DelegateCommand _deleteMedicineCommand;
         private DelegateCommand _addTreatmentCommand;
-
-
+       
 
         private string _cnp;
         private string _diagnosis;
@@ -41,6 +40,10 @@ namespace MedicalClinic.ViewModels
         private String _observations;
         private DateTime _startDate;
         private DateTime _finishDate;
+      
+     
+
+
 
 
 
@@ -62,6 +65,8 @@ namespace MedicalClinic.ViewModels
             _addSelectedMedicinesCommand = new DelegateCommand(AddSelectedMedicine, null);
             _deleteMedicineCommand = new DelegateCommand(DeleteMedicine, null);
             _addTreatmentCommand = new DelegateCommand(AddTreatment, null);
+            _startDate= DateTime.Today;
+            _finishDate = DateTime.Today;
 
 
         }
@@ -353,6 +358,10 @@ namespace MedicalClinic.ViewModels
                 _medicine = null;
                 NotifyPropertyChanged("Medicine");
 
+            }
+            else
+            {
+                MessageBox.Show("Introduceți mai întâi toate valorile!");
             }
         }
 

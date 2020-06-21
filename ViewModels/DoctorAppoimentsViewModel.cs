@@ -60,10 +60,6 @@ namespace MedicalClinic.ViewModels
         }
 
 
-
-
-
-
         public ObservableCollection<DataGridAppoimentsDoctorViewModel> FillAppoimentsGrid(DateTime date)
         {
             var context = new MedicalDBEntities();

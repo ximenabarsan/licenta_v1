@@ -86,6 +86,7 @@
       <DependentUpon>MedicalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AnonymousIdentity.cs" />
+    <Compile Include="Model\BindableBase.cs" />
     <Compile Include="Model\CustomIdentity.cs" />
     <Compile Include="Model\CustomPrincipal.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />

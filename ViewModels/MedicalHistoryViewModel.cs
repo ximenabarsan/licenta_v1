@@ -109,7 +109,7 @@ namespace MedicalClinic.ViewModels
                 if (patient != null)
                 {
                     var queryTreat = from st in context.Treatments
-                                     where st.idDoctor == doc.idDoctor && st.idUser == patient.idUser
+                                     where st.idUser == patient.idUser
                                      select st;
 
                     if (queryTreat.FirstOrDefault<Treatment>() != null)
@@ -159,6 +159,8 @@ namespace MedicalClinic.ViewModels
                     treatments.Add(t);
 
                 }
+               
+
                 dataSource = data.FillTreatmentsGrid(treatments);
                 return dataSource;
             }

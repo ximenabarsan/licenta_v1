@@ -129,7 +129,7 @@ namespace MedicalClinic.ViewModels
                 var query1= from st in context.Medicines
                             where st.idMedicine== p.idMedicine
                             select st.nameMedicine;
-                medicines = medicines + ", " + query1.FirstOrDefault<String>();
+                medicines = medicines + " " + query1.FirstOrDefault<String>();
             }
             return medicines;
 

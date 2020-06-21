@@ -12,7 +12,7 @@
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="AuthenticationWindow" Height="471" Width="817">
+        Title="AuthenticationWindow"  Height="500" Width="850">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -36,7 +36,7 @@
                 <materialDesign:PackIcon Kind="Account" Width="50" Height="43"  
                 Foreground="{Binding BorderBrush, ElementName=EmailTextBox}" VerticalAlignment="Top" Margin="9,15,0,0"/>
                 <TextBox x:Name="EmailTextBox" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="53" VerticalAlignment="Top" CaretBrush="#FF00B6FF" BorderBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
-                 Text="{Binding Email,UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Margin="55,0,37.8,0">
+                 Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Margin="55,0,37.8,0">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <StackPanel>
@@ -61,6 +61,7 @@
                  materialDesign:HintAssist.Hint="Parola"
                  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="56,0,37.8,0" 
                  VerticalAlignment="Top" Height="53" BorderBrush="#FF00B6FF" CaretBrush="#FF00B6FF" SelectionBrush="#FF00B6FF"
+     
                  />
 
             </Grid>
